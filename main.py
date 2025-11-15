@@ -3,6 +3,7 @@ import os
 import json
 from tkinter import messagebox, simpledialog
 
+
 class ContactBook:
     def __init__(self, root):
         self.root = root
@@ -64,10 +65,10 @@ class ContactBook:
         if not name:
             return
         if name in self.contacts:
-            messagebox.showerror("Hiba", "Már létezik ilyen név a névjegyzékben.")
+            messagebox.showerror("Hiba", "Mar létezik ilyen név a névjegyzékben.")
             return
-        phone = simpledialog.askstring("Hozzáadás", "Adj meg egy telefonszámot: ")
-        email = simpledialog.askstring("Hozzáadás", "Adj meg egy email cimet: ")
+        phone = simpledialog.askstring("Hozzaadás", "Adj meg egy telefonszámot: ")
+        email = simpledialog.askstring("Hozzaadás", "Adj meg egy email cimet: ")
         self.contacts[name] = {"phone": phone, "email": email}
         self.save_contacts()
         self.refresh_list()
