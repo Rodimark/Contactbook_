@@ -31,7 +31,7 @@ class ContactBook:
         self.add_btn = tk.Button(self.root, text = "Új személy hozzáadása", command=self.add_contact)
         self.add_btn.pack(side="left", padx=10, pady=10)
 
-        self.edit_btn = tk.Button(self.root, text="Meglévő személy szerkesztése", command=self.edit_contact)
+        self.edit_btn = tk.Button(self.root, text="Meglévő személy szerkesztése", command=self.edit_contact, state = "disabled")
         self.edit_btn.pack(side="left", padx=10, pady=10)
 
         self.delete_btn = tk.Button(self.root, text="Meglévő személy törlése", command=self.delete_contact, state = "disabled")
