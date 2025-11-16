@@ -1,5 +1,5 @@
 ﻿import tkinter as tk
-from tkinter import messagebox, simpledialog
+from tkinter import messagebox, simpledialog, ttk
 import os
 import json
 
@@ -14,9 +14,16 @@ class ContactBook:
         self.file_path = "nevjegyzek.json"
         self.load_contacts()
 
-        self.listbox = tk.Listbox(self.root, font = ("Arial", 12))
-        self.listbox.pack(fill="both", expand=True, padx=10, pady=10)
-        self.listbox.bind("<<ListboxSelect>>", self.show_contact_details)
+        self.treeview = ttk.Treeview(self.root, columns=("Név", "Telefonszám", "Email"))
+        self.treeview.heading("#0", text="Név")
+        self.treeview.heading("Telefonszám", text="Telefonszám")
+        self.treeview.heading("Email", text="Email")
+        self.treeview.column("#0", width=150)
+        self.treeview.column("Telefonszám", width=150)
+        self.treeview.column("Email", width=250)
+        self.treeview.pack(fill="both", expand=True, padx=10, pady=10)
+        self.treeview.bind("<<TreeviewSelect>>", self.show_contact_details)
+        self.treeview.pack(fill = "both", expand = True, padx = 10, pady = 10)
 
         self.detail_label = tk.Label(self.root, text="Válassz ki egy személyt a listából hogy lásd a részleteket", font=("Arial", 12), anchor = "w")
         self.detail_label.pack(fill="x", padx=10, pady=5)
@@ -42,14 +49,16 @@ class ContactBook:
         with open(self.file_path, "w") as file:
             json.dump(self.contacts, file, indent=4)
     def refresh_list(self):
-        self.listbox.delete(0, tk.END)
+        for item in self.treeview.get_children():
+            self.treeview.delete(item)
         for name in sorted(self.contacts.keys()):
-            self.listbox.insert(tk.END, name)
+            self.treeview.insert("", "end", text=name, values=(self.contacts[name]["phone"], self.contacts[name]["email"]))
 
     def show_contact_details(self, event):
-        selected = self.listbox.curselection()
+        selected = self.treeview.selection()
         if selected:
-            name = self.listbox.get(selected)
+            item = self.treeview.item(selected[0])
+            name = item["text"]
             details = self.contacts[name]
             self.detail_label.config(text = f"Név: {name}\nTelefonszám: {details['phone']}\nEmail cím: {details['email']}", font=("Arial", 12), anchor = "w")
             self.edit_btn.config(state="normal")
@@ -73,9 +82,10 @@ class ContactBook:
         self.refresh_list()
 
     def edit_contact(self):
-        selected = self.listbox.curselection()
+        selected = self.treeview.selection()
         if selected:
-            name = self.listbox.get(selected)
+            item = self.treeview.item(selected[0])
+            name = item["text"]
             new_phone = simpledialog.askstring("Szerkesztés", "Adj meg egy új telefonszámot: ", initialvalue=self.contacts[name]["phone"])
             new_email = simpledialog.askstring("Szerkesztés", "Adj meg egy új email címet: ", initialvalue=self.contacts[name]["email"])
             self.contacts[name] = {"phone": new_phone, "email": new_email}
@@ -83,9 +93,10 @@ class ContactBook:
             self.refresh_list()
 
     def delete_contact(self):
-        selected = self.listbox.curselection()
+        selected = self.treeview.selection()
         if selected:
-            name = self.listbox.get(selected)
+            item = self.treeview.item(selected[0])
+            name = item["text"]
             if messagebox.askyesno("Személy törlése", f"Biztosan törölni akarod '{name}'?"):
                 del self.contacts[name]
                 self.save_contacts()
