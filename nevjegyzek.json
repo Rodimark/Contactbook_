@@ -6,5 +6,9 @@
     "Kiss Ferenc": {
         "phone": "06209876543",
         "email": "kicsiferi@freemail.hu"
+    },
+    "Kiss Janos": {
+        "phone": null,
+        "email": "12123"
     }
 }
