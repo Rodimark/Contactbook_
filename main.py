@@ -75,6 +75,7 @@ class ContactBook:
     def edit_contact(self):
         selected = self.listbox.curselection()
         if selected:
+            name = self.listbox.get(selected)
             new_phone = simpledialog.askstring("Szerkesztés", "Adj meg egy új telefonszámot: ", initialvalue=self.contacts[name]["phone"])
             new_email = simpledialog.askstring("Szerkesztés", "Adj meg egy új email címet: ", initialvalue=self.contacts[name]["email"])
             self.contacts[name] = {"phone": new_phone, "email": new_email}
