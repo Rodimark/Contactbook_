@@ -14,7 +14,7 @@ class ContactBook:
         self.file_path = "nevjegyzek.json"
         self.load_contacts()
 
-        self.treeview = ttk.Treeview(self.root, columns=("Név", "Telefonszám", "Email"))
+        self.treeview = ttk.Treeview(self.root, columns=("Telefonszám", "Email"))
         self.treeview.heading("#0", text="Név")
         self.treeview.heading("Telefonszám", text="Telefonszám")
         self.treeview.heading("Email", text="Email")
