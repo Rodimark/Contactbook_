@@ -13,7 +13,7 @@ Egy egyszerű, felhasználóbarát névjegyzék alkalmazás Python és Tkinter h
 - **Névjegyek megjelenítése:** Áttekinthető táblázatos nézetben (TreeView) három oszloppal: Név, Telefonszám, Email cím
 - **Új névjegy hozzáadása:** Egyszerű párbeszédablakokkal történő adatbevitel
 - **Névjegy szerkesztése:** A kiválasztott személy adatainak módosítása
-- **Névjegy törlése:** Megerősítéssel történő törlés
+- **Meglévő névjegy törlése:** Megerősítéssel történő törlés
 - **Automatikus mentés:** Az adatok automatikusan mentésre kerülnek JSON fájlba
 - **Részletes nézet:** A kiválasztott személy adatainak megjelenítése a táblázat alatt
 
