@@ -3,7 +3,6 @@ import os
 import json
 from tkinter import messagebox, simpledialog, ttk
 
-
 class ContactBook:
     def __init__(self, root):
         self.root = root
@@ -11,7 +10,6 @@ class ContactBook:
         self.root.geometry("600x500")
         self.root.resizable(False, False)
 
-        # TreeView 3 oszloppal
         self.tree = ttk.Treeview(self.root, columns=('nev', 'telefon', 'email'), show='headings')
         self.tree.heading('nev', text='Név')
         self.tree.heading('telefon', text='Telefonszám')
@@ -57,62 +55,3 @@ class ContactBook:
         for item in self.tree.get_children():
             self.tree.delete(item)
 
-        for name in sorted(self.contacts.keys()):
-            details = self.contacts[name]
-            self.tree.insert('', tk.END, values=(name, details['phone'], details['email']))
-
-    def show_contact_details(self, event):
-        selected = self.tree.selection()
-        if selected:
-            item = self.tree.item(selected[0])
-            name = item['values'][0]
-            details = self.contacts[name]
-            self.detail_label.config(text=f"Név: {name}\nTelefonszám: {details['phone']}\nEmail cím: {details['email']}")
-            self.edit_btn.config(state="normal")
-            self.delete_btn.config(state="normal")
-        else:
-            self.detail_label.config(text="Válassz ki egy személyt a listából hogy lásd a részleteket")
-            self.edit_btn.config(state="disabled")
-            self.delete_btn.config(state="disabled")
-
-    def add_contact(self):
-        name = simpledialog.askstring("Személy hozzáadása", "Adj meg egy nevet: ")
-        if not name:
-            return
-        if name in self.contacts:
-            messagebox.showerror("Hiba", "Mar létezik ilyen név a névjegyzékben.")
-            return
-        phone = simpledialog.askstring("Hozzáadás", "Adj meg egy telefonszámot: ")
-        email = simpledialog.askstring("Hozzáadás", "Adj meg egy email cimet: ")
-        self.contacts[name] = {"phone": phone, "email": email}
-        self.save_contacts()
-        self.refresh_list()
-
-    def edit_contact(self):
-        selected = self.tree.selection()
-        if selected:
-            item = self.tree.item(selected[0])
-            name = item['values'][0]
-            new_phone = simpledialog.askstring("Szerkesztés", "Adj meg egy új telefonszámot: ", initialvalue=self.contacts[name]["phone"])
-            new_email = simpledialog.askstring("Szerkesztés", "Adj meg egy új email címet: ", initialvalue=self.contacts[name]["email"])
-            self.contacts[name] = {"phone": new_phone, "email": new_email}
-            self.save_contacts()
-            self.refresh_list()
-
-    def delete_contact(self):
-        selected = self.tree.selection()
-        if selected:
-            item = self.tree.item(selected[0])
-            name = item['values'][0]
-            if messagebox.askyesno("Személy törlése", f"Biztosan törölni akarod '{name}'?"):
-                del self.contacts[name]
-                self.save_contacts()
-                self.refresh_list()
-                self.detail_label.config(text="Válassz ki egy személyt a listából hogy lásd a részleteket")
-                self.edit_btn.config(state="disabled")
-                self.delete_btn.config(state="disabled")
-
-if __name__ == "__main__":
-    root = tk.Tk()
-    app = ContactBook(root)
-    root.mainloop()
