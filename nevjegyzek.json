@@ -1,6 +1,10 @@
 {
-    "Janos Ferenc": {
-        "phone": " 523523523523523",
-        "email": "4342423@gmail.com"
+    "Nagy Ferenc": {
+        "phone": "06201234567",
+        "email": "nagyferenc@gmail.com"
+    },
+    "Kiss Ferenc": {
+        "phone": "06209876543",
+        "email": "kicsiferi@freemail.hu"
     }
 }
